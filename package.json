@@ -1,0 +1,29 @@
+{
+  "name": "content",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf build-content",
+    "build-content": "node scripts/buildContent.js",
+    "upload-content": "node scripts/uploadContent.js",
+    "build-all": "npm install && npm run clean && npm run build-content && npm run upload-content"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/logudev12/springboard_content.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/logudev12/springboard_content/issues"
+  },
+  "homepage": "https://github.com/logudev12/springboard_content#readme",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.113.0",
+    "fs-extra": "^10.1.0",
+    "lodash": "^4.17.21",
+    "properties-parser": "^0.3.1",
+    "recursive-readdir": "^2.2.2"
+  }
+}
