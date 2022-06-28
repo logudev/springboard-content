@@ -4,7 +4,13 @@ const { PutObjectCommand } = require('@aws-sdk/client-s3');
 const { S3Client } = require('@aws-sdk/client-s3');
 
 const REGION = 'ap-south-1';
-const s3Client = new S3Client({ region: REGION });
+const s3Client = new S3Client({
+  region: REGION,
+  credentials: {
+    accessKeyId: 'AKIASUBSTDCW5ICQTKXB',
+    secretAccessKey: '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',
+  },
+});
 
 // Upload file to specified bucket.
 const uploadToS3Bucket = async (sourceFilePath, s3BucketPath) => {
