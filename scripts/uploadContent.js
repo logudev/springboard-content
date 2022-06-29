@@ -2,13 +2,15 @@ const path = require('path');
 const fs = require('fs');
 const { PutObjectCommand } = require('@aws-sdk/client-s3');
 const { S3Client } = require('@aws-sdk/client-s3');
+const ShortUniqueId = require('short-unique-id');
+// require('dotenv').config();
 
 const REGION = 'ap-south-1';
 const s3Client = new S3Client({
   region: REGION,
   credentials: {
-    accessKeyId: 'AKIASUBSTDCW5ICQTKXB',
-    secretAccessKey: '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',
+    accessKeyId: process.env.storage_id,
+    secretAccessKey: process.env.storage_value,
   },
 });
 
@@ -16,7 +18,7 @@ const s3Client = new S3Client({
 const uploadToS3Bucket = async (sourceFilePath, s3BucketPath) => {
   const sourceFileStream = fs.createReadStream(sourceFilePath);
   const uploadParams = {
-    Bucket: 'springboard-content',
+    Bucket: 'springboard-asset',
     Key: s3BucketPath,
     Body: sourceFileStream,
   };
@@ -47,13 +49,16 @@ const getUploadContentPromises = (sourceFileBasePath, s3BucketBasePath) => {
 };
 
 const prepareContentAndUpload = async () => {
+  const uid = new ShortUniqueId({ length: 8 });
+  const hashId = uid();
+
   const uploadMobileContentPromises = getUploadContentPromises(
     './build-content/mobile',
-    'springboard/content/mobile'
+    `springboard/content/${hashId}/mobile`
   );
   const uploadWebContentPromises = getUploadContentPromises(
     './build-content/web',
-    'springboard/content/web'
+    `springboard/content/${hashId}/web`
   );
   // Parallel invoking of content upload to S3 bucket
   try {
